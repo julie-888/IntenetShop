@@ -23,5 +23,26 @@ namespace InternetShop.Presistance.Repository
             _appDbContext.SaveChanges();
            
         }
+        public IEnumerable<Category> GetAll()
+        {
+            var categories = _appDbContext.Categories.ToList();
+            return categories;
+        }
+
+        public Category GetById(int id)
+        {
+           var category = _appDbContext
+                .Categories
+                .First(c => c.Id == id);
+
+            return category;
+        }
+        public void Update(Category category)
+        {
+            _appDbContext
+                .Categories
+                .Update(category);
+            _appDbContext.SaveChanges();
+        }
     }
 }

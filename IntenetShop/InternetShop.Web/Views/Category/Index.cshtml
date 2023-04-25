@@ -1,6 +1,7 @@
-﻿
+﻿@model List<CategoryViewModel>
 @{
     ViewData["Title"] = "Category";
+    int count = 0;
 }
 
 <div class="container">
@@ -10,9 +11,59 @@
         </div>
         <div class="col-6 right">
             <a asp-controller="Category"
-            asp-action="Create"
-            class="btn btn-primary">Создать</a>
+               asp-action="Create"
+               class="btn btn-primary">Создать</a>
         </div>
     </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>@count</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"
+                       class="btn btn-primary">
+                            Редактировать
+                        </a>
+                        <a class="btn btn-danger delete">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
+@section Scripts{
+    <script>
+        $('.delete').on('click', function(){
+
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+        )
+        }
+        })
+        })
+    </script>
+}
