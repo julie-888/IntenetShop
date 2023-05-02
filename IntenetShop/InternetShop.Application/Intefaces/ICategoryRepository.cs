@@ -3,11 +3,8 @@
 
 namespace InternetShop.Application.Intefaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IGenericRepository<Category>
     {
-        public void Add(Category category);
-        public IEnumerable<Category> GetAll();
-        public Category GetById(int id);
-        public void Update(Category category);
+     
     }
 }

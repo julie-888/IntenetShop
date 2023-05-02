@@ -35,7 +35,7 @@
                        class="btn btn-primary">
                             Редактировать
                         </a>
-                        <a class="btn btn-danger delete">Удалить</a>
+                        <a class="btn btn-danger delete" id="@item.Id">Удалить</a>
                     </td>
                 </tr>
             }
@@ -56,14 +56,34 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-        if (result.isConfirmed) {
+            if(result.isConfirmed){
+            let isDeleted = Delete(this)
+        if (isDeleted) {
         Swal.fire(
         'Deleted!',
         'Your file has been deleted.',
         'success'
         )
         }
+        }
         })
         })
+        function Delete(el){
+            let id = Number($(el).attr('id'))
+            //console.log(id)
+            //return false
+     
+            return $.ajax({
+                url: '@Url.Action("Delete", "Category")',
+                datatype: 'post',
+                data: { id: id },
+                success: function (){
+                    return true;
+                },
+                error: function(){
+                    return false;
+                }
+            })
+        }
     </script>
 }
