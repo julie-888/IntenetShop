@@ -22,6 +22,7 @@ namespace InternetShop.Presistance
                     configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IApplicationTypeRepository, ApplicationTypeRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
                     

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace InternetShop.Presistance.Repository
 {
-    public class ApplicationTypeRepository : GenericRepository<ApplicationType>, IApplicationTypeRepository
+    public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        public ApplicationTypeRepository(AppDbContext context) : base(context)
+        public ProductRepository(AppDbContext context) : base(context)
         {
         }
     }
