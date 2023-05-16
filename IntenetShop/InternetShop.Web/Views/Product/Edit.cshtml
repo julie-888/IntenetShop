@@ -1,10 +1,10 @@
 ﻿@model ProductViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <div class="container">
-    <form asp-action="Create"enctype="multipart/form-data">
+    <form asp-action="Edit" enctype="multipart/form-data">
         <div class="border col-8">
             <div class="form-group row">
                 <h2>@ViewData["Title"]</h2>
@@ -36,7 +36,7 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
-             <div class="form-group row">
+            <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Image"></label>
                 </div>
@@ -51,8 +51,8 @@
                 <div class="col-8">
                     <select asp-for="CategoryId" asp-items="@Model.CategoryDropDown" class="form-control">
                         <option>Select Category</option>
-                        </select>
-                 
+                    </select>
+
                 </div>
             </div>
             <div class="form-group row">
@@ -68,10 +68,14 @@
             </div>
 
         </div>
+        <div class="col-4">
+            <img src="@Model.Image" />
+        </div>
 
     </form>
 </div>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }
+
 

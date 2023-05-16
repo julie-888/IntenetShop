@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using IntenetShop.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace InternetShop.Web.Models
@@ -11,8 +12,9 @@ namespace InternetShop.Web.Models
         public string Description { get; set; }
         [Range(0, int.MaxValue)]
         public decimal Price { get; set; }
-        public string Image { get; set; }
+        public string Image { get; set; } = string.Empty;
         public List<SelectListItem>? CategoryDropDown { get; set; }
         public int CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
 }

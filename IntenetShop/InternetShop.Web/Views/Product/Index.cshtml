@@ -10,7 +10,7 @@
             <h2>@ViewData["Title"]</h2>
         </div>
         <div class="col-6 right">
-            <a asp-controller="ApplicationType"
+            <a asp-controller="Product"
                asp-action="Create"
                class="btn btn-primary">Создать</a>
         </div>
@@ -21,6 +21,7 @@
                 <th>#</th>
                 <th>Название</th>
                 <th>Цена</th>
+                <th>Категория</th>
                 <th></th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                     <td>@count</td>
                     <td>@item.Name</td>
                     <td>@item.Price</td>
+                    <td>@item.Category.Name</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id"
                        class="btn btn-primary">

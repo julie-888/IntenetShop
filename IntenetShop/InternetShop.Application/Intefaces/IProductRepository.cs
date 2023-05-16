@@ -9,5 +9,6 @@ namespace InternetShop.Application.Intefaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
+        public IEnumerable<Product> GetProducts();
     }
 }
