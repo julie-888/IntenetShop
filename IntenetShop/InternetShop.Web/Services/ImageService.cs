@@ -29,6 +29,16 @@
             
             return nameImage;
         }
-        
+        public void DeleteImage(string imageName)
+        {
+            string fullPath = _environment.WebRootPath +
+                _configuration["ImagePath"];
+            if(File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+
     }
 }

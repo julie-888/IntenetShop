@@ -17,10 +17,18 @@ namespace InternetShop.Presistance.Repository
         {
            _appDbContext= context;
         }
+
+        public Product GetProductById(int id)
+        {
+            var product = _appDbContext.Products.AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
+            return product;
+        }
         public IEnumerable<Product> GetProducts()
         {
             var products = _appDbContext.Products
-            .Include(p => p.Category);
+            .Include(p => p.Category)
+            .Include(p => p.ApplicationType);
             return products;
         }
     }

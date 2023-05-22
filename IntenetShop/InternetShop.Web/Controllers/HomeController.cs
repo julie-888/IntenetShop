@@ -1,4 +1,6 @@
-﻿using InternetShop.Web.Models;
+﻿using InternetShop.Application.Intefaces;
+using InternetShop.Web.Models;
+using InternetShop.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +8,42 @@ namespace InternetShop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductRepository _productRepository;
+        public readonly IConfiguration _config;
+        public readonly ICategoryRepository _categoryRepository;
+        public HomeController(IProductRepository productRepository, IConfiguration config, ICategoryRepository categoryRepository)
         {
-            _logger = logger;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+            _config = config;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var entity = _productRepository.GetProducts();
+            var categories = _categoryRepository.GetAll();
+            var model = new HomeViewModel
+            {
+                Products = entity.Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price= p.Price,
+                    Category = p.Category,
+                    ApplicationType= p.ApplicationType,
+                    Image = _config["ImagePath"] + p.Image
+
+                }).ToList(),
+                Categories = categories.Select(c=> new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name= c.Name,   
+                
+                }).ToList(),
+            };
+            return View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+       
     }
 }

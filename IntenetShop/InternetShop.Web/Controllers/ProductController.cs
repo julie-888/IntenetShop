@@ -30,8 +30,9 @@ namespace InternetShop.Web.Controllers
                 Id = p.Id,
                 Name = p.Name,
                 Price = p.Price,
-                Category = p.Category
-
+                Category = p.Category,
+                ApplicationType = p.ApplicationType
+            
 
             }).ToList();
             return View(product);
@@ -42,7 +43,9 @@ namespace InternetShop.Web.Controllers
            
             var products = new ProductViewModel
             {
-                CategoryDropDown = _productService.GetCategoryList()
+                CategoryDropDown = _productService.GetCategoryList(),
+                ApplicationTypeDropDown = _productService.GetApplicationTypeList(),
+
             };
             return View(products);
             
@@ -53,6 +56,7 @@ namespace InternetShop.Web.Controllers
             if (!ModelState.IsValid)
             {
                 product.CategoryDropDown= _productService.GetCategoryList();
+                product.ApplicationTypeDropDown= _productService.GetApplicationTypeList();
                 return View(product);
             }
             var files = HttpContext.Request.Form.Files;
@@ -65,6 +69,7 @@ namespace InternetShop.Web.Controllers
                 Description = product.Description,
                 Image = product.Image,
                 CategoryId = product.CategoryId,
+                ApplicationTypeId= product.ApplicationTypeId,
             };
             _productRepository.Add(entity);
 
@@ -82,6 +87,8 @@ namespace InternetShop.Web.Controllers
                 Image = _imageService.imagePath + entity.Image,
                 CategoryId= entity.CategoryId,
                 CategoryDropDown = _productService.GetCategoryList(),
+                ApplicationTypeId= entity.ApplicationTypeId,
+                ApplicationTypeDropDown = _productService.GetApplicationTypeList(),
             };
 
             return View(product);
@@ -90,8 +97,40 @@ namespace InternetShop.Web.Controllers
         [HttpPost]
         public IActionResult Edit(ProductViewModel product)
         {
+            if(!ModelState.IsValid) {
+                return View(product);
+            }
+
+            var currentProduct = _productRepository.GetProductById(product.Id);
+            _imageService.DeleteImage(currentProduct.Image);
+
+            var files = HttpContext.Request.Form.Files;
+
+            var entity = new Product
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Image = _imageService.ImageLoad(files),
+                CategoryId = product.CategoryId,
+                
+            };
+
+            _productRepository.Update(entity);
             return RedirectToAction("Index");
         }
-        
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var currentProduct = _productRepository.GetProductById(id);
+            _imageService.DeleteImage(currentProduct.Image);
+           
+            _productRepository.Remove(currentProduct);
+
+            return RedirectToAction("Index");
+
+        }
+
     }
 }
