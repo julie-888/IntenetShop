@@ -11,7 +11,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddPresistance(builder.Configuration);
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<ProductService>();
-   
+builder.Services.AddSession(options=>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+
+});
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -27,6 +35,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

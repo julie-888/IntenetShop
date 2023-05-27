@@ -12,10 +12,10 @@
         <img class="card-img-top img-fluid d-block mx-auto mb-3" src="@Model.Image" alt="" />
         <div class="card-body p-1 px-3 row">
             <div class="col-6">
-                <span class="badge p-2 border w-100" style="background-color:lavenderblush">@Model.Category.Name</span>
+                <span class="badge bg-dark p-2 border w-100" style="background-color:lavenderblush">@Model.Category.Name</span>
             </div>
             <div class="col-6 border-0">
-                <span class="badge p-2 border w-100" style="background-color:aliceblue">@Model.ApplicationType.Name</span>
+                <span class="badge bg-dark p-2 border w-100" style="background-color:aliceblue">@Model.ApplicationType.Name</span>
             </div>
             <div class="col-12 p-1">
                 <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark form-control btn-sm p-2" style="height:40px">Подробнее</a>

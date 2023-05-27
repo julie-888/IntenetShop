@@ -21,6 +21,9 @@ namespace InternetShop.Presistance.Repository
         public Product GetProductById(int id)
         {
             var product = _appDbContext.Products.AsNoTracking()
+                .AsNoTracking()
+                .Include(x=>x.Category)
+                .Include(x=>x.ApplicationType)
                 .FirstOrDefault(p => p.Id == id);
             return product;
         }
